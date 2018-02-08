@@ -20,8 +20,13 @@
     "webpack",
     "plugin",
     "html-webpack-plugin",
+    "webapp",
+    "pwa",
+    "manifest",
     "favicon",
-    "icon"
+    "icon",
+    "png",
+    "svg"
   ],
   "contributors": [
     "Bruno Dutra <brunocodutra@gmail.com> (https://github.com/brunocodutra)",
