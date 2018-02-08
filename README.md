@@ -30,7 +30,6 @@ plugins: [
 ```
 
 This basic configuration will generate [37 different icons](https://github.com/brunocodutra/webapp-webpack-plugin/tree/master/test/fixtures/expected/default/icons-366a3768de05f9e78c392fa62b8fbb80) for iOS devices, Android devices and the Desktop browser out of your `my-logo.png` file.
-It can optionally also generate a [JSON file with all information about the icons](https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/generate-html/iconstats.json) for you.
 
 If you are using with [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) it will also inject the necessary html for you:
 
@@ -56,10 +55,6 @@ plugins: [
     logo: 'my-logo.png',
     // The prefix for all image files (might be a folder or a name)
     prefix: 'icons-[hash]/',
-    // Emit all stats of the generated icons
-    emitStats: false,
-    // The name of the json containing all favicon information
-    statsFilename: 'iconstats-[hash].json',
     // Inject the html into the html-webpack-plugin
     inject: true,
     // favicon background color (see https://github.com/haydenbleasel/favicons#usage)

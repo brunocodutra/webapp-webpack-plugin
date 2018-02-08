@@ -60,25 +60,10 @@ test('should generate the expected default result', async t => {
   t.is(diffFiles[0], undefined);
 });
 
-test('should generate a configured JSON file', async t => {
-  const stats = await webpack(baseWebpackConfig(new WebappWebpackPlugin({
-    logo: LOGO_PATH,
-    emitStats: true,
-    statsFilename: 'iconstats.json'
-  })));
-  const outputPath = stats.compilation.compiler.outputPath;
-  const expected = path.resolve(__dirname, 'fixtures/expected/generate-json');
-  const compareResult = await dircompare.compare(outputPath, expected, compareOptions);
-  const diffFiles = compareResult.diffSet.filter((diff) => diff.state !== 'equal');
-  t.is(diffFiles[0], undefined);
-});
-
 test('should work together with the html-webpack-plugin', async t => {
   const stats = await webpack(baseWebpackConfig([
     new WebappWebpackPlugin({
       logo: LOGO_PATH,
-      emitStats: true,
-      statsFilename: 'iconstats.json',
     }),
     new HtmlWebpackPlugin()
   ]));
