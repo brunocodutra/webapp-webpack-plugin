@@ -1,5 +1,5 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module faviconPersitenceCache
+/******/ 	// The module cache
 /******/ 	var installedModules = {};
 
 /******/ 	// The require function
@@ -42,9 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	eval("console.log('hello world');\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./fixtures/entry.js\n// module id = 0\n// module chunks = 0\n//# sourceURL=webpack:///./fixtures/entry.js?");
 
-/***/ }
+/***/ })
 /******/ ]);
