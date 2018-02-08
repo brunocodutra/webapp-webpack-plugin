@@ -3,7 +3,6 @@ Favicons Webpack Plugin
 [![npm version](https://badge.fury.io/js/webapp-webpack-plugin.svg)](http://badge.fury.io/js/webapp-webpack-plugin)
 [![Dependency Status](https://david-dm.org/brunocodutra/webapp-webpack-plugin.svg)](https://david-dm.org/brunocodutra/webapp-webpack-plugin)
 [![Build status](https://travis-ci.org/brunocodutra/webapp-webpack-plugin.svg)](https://travis-ci.org/brunocodutra/webapp-webpack-plugin)
-[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 Allows to use the [favicons](https://github.com/haydenbleasel/favicons) generator with webpack
 
@@ -21,12 +20,12 @@ Basic Usage
 Add the plugin to your webpack config as follows:
 
 ```javascript
-let FaviconsWebpackPlugin = require('webapp-webpack-plugin')
+let WebappWebpackPlugin = require('webapp-webpack-plugin')
 
 ...
 
 plugins: [
-  new FaviconsWebpackPlugin('my-logo.png')
+  new WebappWebpackPlugin('my-logo.png')
 ]
 ```
 
@@ -52,7 +51,7 @@ Advanced Usage
 
 ```javascript
 plugins: [
-  new FaviconsWebpackPlugin({
+  new WebappWebpackPlugin({
     // Your source logo
     logo: 'my-logo.png',
     // The prefix for all image files (might be a folder or a name)
@@ -61,9 +60,6 @@ plugins: [
     emitStats: false,
     // The name of the json containing all favicon information
     statsFilename: 'iconstats-[hash].json',
-    // Generate a cache file with control hashes and
-    // don't rebuild the favicons until those hashes change
-    persistentCache: true,
     // Inject the html into the html-webpack-plugin
     inject: true,
     // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
@@ -96,7 +92,6 @@ Take a look at the  [CHANGELOG.md](https://github.com/brunocodutra/webapp-webpac
 # Contribution
 
 You're free to contribute to this project by submitting [issues](https://github.com/brunocodutra/webapp-webpack-plugin/issues) and/or [pull requests](https://github.com/brunocodutra/webapp-webpack-plugin/pulls). This project is test-driven, so keep in mind that every change and new feature should be covered by tests.
-This project uses the [semistandard code style](https://github.com/Flet/semistandard).
 
 # License
 
