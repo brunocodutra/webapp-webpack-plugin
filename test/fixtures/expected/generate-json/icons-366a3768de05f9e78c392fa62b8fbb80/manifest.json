@@ -1,6 +1,6 @@
 {
-  "name": "favicons-webpack-plugin",
-  "short_name": "favicons-webpack-plugin",
+  "name": "webapp-webpack-plugin",
+  "short_name": "webapp-webpack-plugin",
   "description": null,
   "dir": "auto",
   "lang": "en-US",
