@@ -1,30 +1,31 @@
 import test from 'ava';
 import path from 'path';
 import rimraf from 'rimraf';
-import WebappWebpackPlugin from '..';
 import denodeify from 'denodeify';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import dircompare from 'dir-compare';
-import packageJson from '../package.json';
+
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WebappWebpackPlugin from '..';
 
 const webpack = denodeify(require('webpack'));
-const readFile = denodeify(require('fs').readFile);
-const writeFile = denodeify(require('fs').writeFile);
 
 const compareOptions = {compareSize: true};
+
+const FIXTURES = path.resolve(__dirname, 'fixtures');
+const LOGO = path.resolve(FIXTURES, 'logo.png');
+const DIST = path.resolve(__dirname, 'dist');
+
+rimraf.sync(DIST);
+
 let outputId = 0;
-const LOGO_PATH = path.resolve(__dirname, 'fixtures/logo.png');
-
-rimraf.sync(path.resolve(__dirname, '../dist'));
-
-function baseWebpackConfig (plugin) {
+function baseWebpackConfig (...plugins) {
   return {
-    devtool: 'eval',
-    entry: path.resolve(__dirname, 'fixtures/entry.js'),
+    entry: path.resolve(FIXTURES, 'entry.js'),
     output: {
-      path: path.resolve(__dirname, '../dist', 'test-' + (outputId++))
+      filename: 'bundle.js',
+      path: path.resolve(DIST, 'test-' + (outputId++)),
     },
-    plugins: [].concat(plugin)
+    plugins: [...plugins]
   };
 }
 
@@ -40,36 +41,36 @@ test('should throw error when called without arguments', async t => {
 });
 
 test('should take a string as argument', async t => {
-  var plugin = new WebappWebpackPlugin(LOGO_PATH);
-  t.is(plugin.options.logo, LOGO_PATH);
+  var plugin = new WebappWebpackPlugin(LOGO);
+  t.is(plugin.options.logo, LOGO);
 });
 
 test('should take an object with just the logo as argument', async t => {
-  var plugin = new WebappWebpackPlugin({ logo: LOGO_PATH });
-  t.is(plugin.options.logo, LOGO_PATH);
+  var plugin = new WebappWebpackPlugin({ logo: LOGO });
+  t.is(plugin.options.logo, LOGO);
 });
 
 test('should generate the expected default result', async t => {
   const stats = await webpack(baseWebpackConfig(new WebappWebpackPlugin({
-    logo: LOGO_PATH
+    logo: LOGO
   })));
   const outputPath = stats.compilation.compiler.outputPath;
-  const expected = path.resolve(__dirname, 'fixtures/expected/default');
+  const expected = path.resolve(FIXTURES, 'expected/default');
   const compareResult = await dircompare.compare(outputPath, expected, compareOptions);
-  const diffFiles = compareResult.diffSet.filter((diff) => diff.state !== 'equal');
-  t.is(diffFiles[0], undefined);
+  const diff = compareResult.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => `${name1} ≠ ${name2}`);
+  t.deepEqual(diff, []);
 });
 
 test('should work together with the html-webpack-plugin', async t => {
-  const stats = await webpack(baseWebpackConfig([
+  const stats = await webpack(baseWebpackConfig(
     new WebappWebpackPlugin({
-      logo: LOGO_PATH,
+      logo: LOGO,
     }),
     new HtmlWebpackPlugin()
-  ]));
+  ));
   const outputPath = stats.compilation.compiler.outputPath;
-  const expected = path.resolve(__dirname, 'fixtures/expected/generate-html');
+  const expected = path.resolve(FIXTURES, 'expected/generate-html');
   const compareResult = await dircompare.compare(outputPath, expected, compareOptions);
-  const diffFiles = compareResult.diffSet.filter((diff) => diff.state !== 'equal');
-  t.is(diffFiles[0], undefined);
+  const diff = compareResult.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => `${name1} ≠ ${name2}`);
+  t.deepEqual(diff, []);
 });
