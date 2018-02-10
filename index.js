@@ -1,9 +1,9 @@
 'use strict';
-var childCompiler = require('./lib/compiler.js');
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
-var parseAuthor = require('parse-author');
+const childCompiler = require('./lib/compiler.js');
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const parseAuthor = require('parse-author');
 
 function WebappWebpackPlugin (options) {
   if (typeof options === 'string') {
@@ -18,33 +18,31 @@ function WebappWebpackPlugin (options) {
 }
 
 WebappWebpackPlugin.prototype.apply = function (compiler) {
-  var self = this;
-
-  if (!self.options.favicons.appName) {
-    self.options.favicons.appName = guessAppName(compiler.context);
+  if (!this.options.favicons.appName) {
+    this.options.favicons.appName = guessAppName(compiler.context);
   }
 
-  if (!self.options.favicons.appDescription) {
-    self.options.favicons.appDescription = guessDescription(compiler.context);
+  if (!this.options.favicons.appDescription) {
+    this.options.favicons.appDescription = guessDescription(compiler.context);
   }
 
-  if (!self.options.favicons.version) {
-    self.options.favicons.version = guessVersion(compiler.context);
+  if (!this.options.favicons.version) {
+    this.options.favicons.version = guessVersion(compiler.context);
   }
 
-  if (!self.options.favicons.developerName) {
-    self.options.favicons.developerName = guessDeveloperName(compiler.context);
+  if (!this.options.favicons.developerName) {
+    this.options.favicons.developerName = guessDeveloperName(compiler.context);
   }
 
-  if (!self.options.favicons.developerURL) {
-    self.options.favicons.developerURL = guessDeveloperURL(compiler.context);
+  if (!this.options.favicons.developerURL) {
+    this.options.favicons.developerURL = guessDeveloperURL(compiler.context);
   }
 
   // Generate the favicons
-  var compilationResult;
-  compiler.plugin('make', function (compilation, callback) {
-    childCompiler.compileTemplate(self.options, compiler.context, compilation)
-      .then(function (result) {
+  let compilationResult;
+  compiler.plugin('make', (compilation, callback) => {
+    childCompiler.compileTemplate(this.options, compiler.context, compilation)
+      .then((result) => {
         compilationResult = result;
         callback();
       })
@@ -53,9 +51,9 @@ WebappWebpackPlugin.prototype.apply = function (compiler) {
 
   // Hook into the html-webpack-plugin processing
   // and add the html
-  if (self.options.inject) {
-    compiler.plugin('compilation', function (compilation) {
-      compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
+  if (this.options.inject) {
+    compiler.plugin('compilation', (compilation) => {
+      compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, callback) => {
         if (htmlPluginData.plugin.options.favicons !== false) {
           htmlPluginData.html = htmlPluginData.html.replace(
             /(<\/head>)/i, compilationResult.join('\n') + '$&');
@@ -76,7 +74,7 @@ function readJSON (file) {
 /**
  * Tries to find the package.json and caches its contents
  */
-var _pkg = undefined;
+let _pkg;
 function readPackageJson (compilerWorkingDirectory) {
   _pkg = _pkg
     || readJSON(path.resolve(compilerWorkingDirectory, 'package.json'))
