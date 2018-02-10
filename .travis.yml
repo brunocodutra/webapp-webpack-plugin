@@ -27,6 +27,7 @@ before_script:
 - greenkeeper-lockfile-update
 
 script:
+- (cd example && node build.js)
 - npm test
 
 after_script:
