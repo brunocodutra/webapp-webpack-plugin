@@ -1,56 +1,54 @@
 {
-  "name": "favicons-webpack-plugin",
-  "version": "0.0.7",
-  "description": "Let webpack generate all your favicons and icons for you",
+  "name": "webapp-webpack-plugin",
+  "version": "1.0.0",
+  "description": "Let webpack generate your progressive web app icons for you",
   "main": "index.js",
   "files": [
     "index.js",
     "lib/"
   ],
   "scripts": {
-    "lint": "semistandard",
-    "prepublish": "npm run test",
-    "posttest": "npm run lint",
-    "test": "ava"
+    "test": "ava test/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jantimon/favicons-webpack-plugin.git"
+    "url": "https://github.com/brunocodutra/webapp-webpack-plugin.git"
   },
   "keywords": [
     "webpack",
     "plugin",
     "html-webpack-plugin",
+    "webapp",
+    "pwa",
+    "manifest",
     "favicon",
-    "icon"
+    "icon",
+    "png",
+    "svg"
   ],
-  "author": "Jan Nicklas <j.nicklas@me.com> (https://github.com/jantimon)",
+  "author": "Bruno Dutra <brunocodutra@gmail.com> (https://github.com/brunocodutra)",
+  "contributors": [
+    "Jan Nicklas <j.nicklas@me.com> (https://github.com/jantimon)"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jantimon/favicons-webpack-plugin/issues"
+    "url": "https://github.com/brunocodutra/webapp-webpack-plugin/issues"
   },
-  "semistandard": {
-    "parser": "babel-eslint"
-  },
-  "homepage": "https://github.com/jantimon/favicons-webpack-plugin",
+  "homepage": "https://github.com/brunocodutra/webapp-webpack-plugin",
   "devDependencies": {
-    "ava": "^0.16.0",
-    "babel-eslint": "^7.1.0",
+    "ava": "^0.25.0",
     "denodeify": "^1.2.1",
-    "dir-compare": "^1.0.1",
-    "express": "^4.13.4",
-    "html-webpack-plugin": "^2.16.0",
-    "memory-fs": "^0.3.0",
-    "mkdirp": "^0.5.1",
-    "rimraf": "^2.5.2",
-    "semistandard": "^9.1.0",
-    "webpack": "^1.13.0",
-    "webpack-dev-middleware": "^1.6.1"
+    "dir-compare": "^1.4.0",
+    "express": "^4.16.2",
+    "html-webpack-plugin": "^2.30.1",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.5"
   },
   "dependencies": {
-    "favicons": "^4.8.3",
-    "loader-utils": "^0.2.14",
-    "lodash": "^4.11.1"
+    "favicons": "^4.8.6",
+    "loader-utils": "^1.1.0",
+    "parse-author": "^2.0.0"
   },
   "peerDependencies": {
     "webpack": "^1.13.0 || ^2.0.0 || ^3.0.0"
