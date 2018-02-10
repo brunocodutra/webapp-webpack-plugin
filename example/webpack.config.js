@@ -12,7 +12,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new WebappWebpackPlugin('./src/logo.png'),
+    new WebappWebpackPlugin('./src/logo.svg'),
     new HtmlWebpackPlugin()
   ]
 };
