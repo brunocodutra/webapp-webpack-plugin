@@ -6,6 +6,8 @@
 
 Leverages on [favicons](https://github.com/haydenbleasel/favicons) to automatically generate your progressive web app for you.
 
+> Originally forked from https://github.com/jantimon/favicons-webpack-plugin
+
 ## Installation
 
 Install the plugin with npm:
