@@ -1,14 +1,14 @@
 {
-  "version": "1.0",
+  "version": "0.0.7",
   "name": "webapp-webpack-plugin",
-  "description": null,
+  "description": "Let webpack generate your progressive web app icons for you",
   "icons": {
     "60": "firefox_app_60x60.png",
     "128": "firefox_app_128x128.png",
     "512": "firefox_app_512x512.png"
   },
   "developer": {
-    "name": null,
-    "url": null
+    "name": "Bruno Dutra",
+    "url": "https://github.com/brunocodutra"
   }
 }

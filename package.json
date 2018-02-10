@@ -26,8 +26,8 @@
     "png",
     "svg"
   ],
+  "author": "Bruno Dutra <brunocodutra@gmail.com> (https://github.com/brunocodutra)",
   "contributors": [
-    "Bruno Dutra <brunocodutra@gmail.com> (https://github.com/brunocodutra)",
     "Jan Nicklas <j.nicklas@me.com> (https://github.com/jantimon)"
   ],
   "license": "MIT",
@@ -48,7 +48,7 @@
   "dependencies": {
     "favicons": "^4.8.6",
     "loader-utils": "^1.1.0",
-    "lodash": "^4.17.5"
+    "parse-author": "^2.0.0"
   },
   "peerDependencies": {
     "webpack": "^1.13.0 || ^2.0.0 || ^3.0.0"
