@@ -63,10 +63,10 @@ test('should generate the expected default result', async t => {
 
 test('should work together with the html-webpack-plugin', async t => {
   const stats = await webpack(baseWebpackConfig(
+    new HtmlWebpackPlugin(),
     new WebappWebpackPlugin({
       logo: LOGO,
     }),
-    new HtmlWebpackPlugin()
   ));
   const outputPath = stats.compilation.compiler.outputPath;
   const expected = path.resolve(FIXTURES, 'expected/generate-html');
