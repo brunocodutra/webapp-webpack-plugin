@@ -52,7 +52,10 @@ jobs:
 
 before_install:
   # package-lock.json was introduced in npm@5
-- '[[ $(node -v) =~ ^v9.*$ ]] || npm install -g npm@latest'
+- '[[ $(node -v) =~ ^v9.*$ ]] || travis_retry npm install -g npm@latest'
+
+install:
+- travis_retry npm install
 
 before_script:
 - git config --global user.name "Travis Bot"
