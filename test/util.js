@@ -19,7 +19,10 @@ module.exports.generate = async (plugins) => await denodeify(webpack)({
 });
 
 module.exports.compare = async (a, b) => {
-  const diff = await dircompare.compare(a, b, {compareSize: true});
+  const diff = await dircompare.compare(a, b, {
+    compareContent: true,
+    excludeFilter: 'bundle.js',
+  });
   return diff.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => (
     `${path.join(a, name1 + '')} ≠ ${path.join(b, name2 + '')}`)
   );
