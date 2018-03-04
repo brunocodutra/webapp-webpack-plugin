@@ -1,4 +1,6 @@
+const os = require('os');
 const path = require('path');
+const fs = require('fs-extra');
 const webpack = require('webpack');
 const denodeify = require('denodeify');
 const dircompare = require('dir-compare');
@@ -11,12 +13,14 @@ module.exports.generate = async (plugins) => await denodeify(webpack)({
   entry: path.resolve(fixtures, 'entry.js'),
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist', plugins.length + ''),
+    path: await fs.mkdtemp(path.join(os.tmpdir(), 'WWP')),
   },
   plugins,
 });
 
 module.exports.compare = async (a, b) => {
   const diff = await dircompare.compare(a, b, {compareSize: true});
-  return diff.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => `${name1} ≠ ${name2}`);
+  return diff.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => (
+    `${path.join(a, name1 + '')} ≠ ${path.join(b, name2 + '')}`)
+  );
 };

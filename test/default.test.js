@@ -1,7 +1,6 @@
 const test = require('ava');
 const path = require('path');
-const rimraf = require('rimraf');
-const denodeify = require('denodeify');
+const fs = require('fs-extra');
 const WebappWebpackPlugin = require('..');
 const util = require('./util');
 
@@ -13,4 +12,4 @@ test('should generate the expected default result', async t => {
   t.deepEqual(diff, []);
 });
 
-test.afterEach(t => denodeify(rimraf)(t.context.dist));
+test.afterEach(t => fs.remove(t.context.dist));

@@ -1,7 +1,6 @@
 const test = require('ava');
 const path = require('path');
-const rimraf = require('rimraf');
-const denodeify = require('denodeify');
+const fs = require('fs-extra');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebappWebpackPlugin = require('..');
 const util = require('./util');
@@ -17,4 +16,4 @@ test('should work together with the html-webpack-plugin', async t => {
   t.deepEqual(diff, []);
 });
 
-test.afterEach(t => denodeify(rimraf)(t.context.dist));
+test.afterEach(t => fs.remove(t.context.dist));
