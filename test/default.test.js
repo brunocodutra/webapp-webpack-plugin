@@ -1,14 +1,15 @@
-const test = require('ava');
-const path = require('path');
-const fs = require('fs-extra');
-const WebappWebpackPlugin = require('..');
-const util = require('./util');
+import test from 'ava';
+import path from 'path';
+import fs from 'fs-extra';
+import WebappWebpackPlugin from '..';
+
+import {logo, generate, compare, expected} from './util';
 
 test('should generate the expected default result', async t => {
-  const stats = await util.generate([new WebappWebpackPlugin({logo: util.logo})]);
+  const stats = await generate([new WebappWebpackPlugin({logo})]);
 
   t.context.dist = stats.compilation.compiler.outputPath;
-  const diff = await util.compare(t.context.dist, path.resolve(util.expected, 'default'));
+  const diff = await compare(t.context.dist, path.resolve(expected, 'default'));
   t.deepEqual(diff, []);
 });
 
