@@ -7,7 +7,8 @@
 
 Leverages on [favicons](https://github.com/haydenbleasel/favicons) to automatically generate your progressive web app for you.
 
-> Originally forked from https://github.com/jantimon/favicons-webpack-plugin
+> Originally forked from [jantimon/favicons-webpack-plugin](https://github.com/jantimon/favicons-webpack-plugin)
+> <br/>[What's new?](https://github.com/brunocodutra/webapp-webpack-plugin/releases)
 
 ## Installation
 
