@@ -78,7 +78,7 @@ In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-
 <link rel="shortcut icon" href="assets/favicon.ico">
 ```
 
-> https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/generate-html/index.html
+> https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/html
 
 ## Advanced Usage
 
