@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "name": "webapp-webpack-plugin",
   "description": "Let webpack generate your progressive web app icons for you",
   "icons": {
