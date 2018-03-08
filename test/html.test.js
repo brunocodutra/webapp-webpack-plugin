@@ -7,10 +7,12 @@ import WebappWebpackPlugin from '..';
 import {logo, generate, compare, expected} from './util';
 
 test('should work together with the html-webpack-plugin', async t => {
-  const stats = await generate([
-    new HtmlWebpackPlugin(),
-    new WebappWebpackPlugin({logo}),
-  ]);
+  const stats = await generate({
+    plugins: [
+      new HtmlWebpackPlugin(),
+      new WebappWebpackPlugin({logo}),
+    ],
+  });
 
   t.context.dist = stats.compilation.compiler.outputPath;
   const diff = await compare(t.context.dist, path.resolve(expected, 'html'));
