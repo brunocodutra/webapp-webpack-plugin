@@ -53,7 +53,7 @@ module.exports.compare = async (a, b) => {
     compareContent: true,
   });
 
-  return diff.diffSet.filter(({state}) => state !== 'equal').map(({name1, name2}) => (
-    `${path.join(a, name1 + '')} ≠ ${path.join(b, name2 + '')}`)
+  return diff.diffSet.filter(({state}) => state !== 'equal').map(({path1, name1, path2, name2}) => (
+    `${path.join(path1 || '', name1 + '')} ≠ ${path.join(path2 || '', name2 + '')}`)
   );
 };
