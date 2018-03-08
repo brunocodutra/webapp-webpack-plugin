@@ -1,7 +1,7 @@
 {
-  "name": "webapp-webpack-plugin",
-  "short_name": "webapp-webpack-plugin",
-  "description": "Let webpack generate your progressive web app icons for you",
+  "name": null,
+  "short_name": null,
+  "description": null,
   "dir": "auto",
   "lang": "en-US",
   "display": "standalone",
