@@ -76,5 +76,4 @@ before_script:
 - git config --global user.email "\<\>"
 
 script:
-- npm run example
 - npm test
