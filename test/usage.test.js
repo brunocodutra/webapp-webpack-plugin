@@ -1,7 +1,7 @@
-import test from 'ava';
-import WebappWebpackPlugin from '../src';
+const test = require('ava');
+const WebappWebpackPlugin = require('../src');
 
-import {logo, mkdir} from './util';
+const {logo, mkdir} = require('./util');
 
 test('should throw error when instantiated without a logo', t => {
   try {
