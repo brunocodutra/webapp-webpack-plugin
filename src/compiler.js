@@ -13,7 +13,7 @@ module.exports.run = ({prefix, favicons, logo}, context, compilation) => {
   const compiler = compilation.createChildCompiler('webapp-webpack-plugin', {filename, publicPath});
   compiler.context = context;
 
-  const loader = require.resolve('./favicons');
+  const loader = require.resolve('./loader');
   const query = JSON.stringify({prefix, options: favicons});
 
   new SingleEntryPlugin(context, `!!${loader}?${query}!${logo}`).apply(compiler);
