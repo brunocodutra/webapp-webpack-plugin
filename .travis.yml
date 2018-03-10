@@ -31,6 +31,12 @@ matrix:
 
 jobs:
   include:
+  - stage: test
+    os: linux
+    node_js: node
+    env: ""
+    script: npm run coverage
+
   - stage: deploy
     os: linux
     node_js: node
