@@ -34,6 +34,7 @@ jobs:
   - stage: deploy
     os: linux
     node_js: node
+    env: ""
     install: skip
     script: skip
     deploy:
@@ -50,6 +51,7 @@ jobs:
     if: type = pull_request
     os: linux
     node_js: node
+    env: ""
     install: travis_retry npm install
     script:
     - |
