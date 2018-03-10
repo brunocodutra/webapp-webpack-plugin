@@ -1,4 +1,4 @@
-# Favicons Webpack Plugin
+# Webapp Webpack Plugin
 
 [![npm version](https://badge.fury.io/js/webapp-webpack-plugin.svg)](http://badge.fury.io/js/webapp-webpack-plugin)
 [![Greenkeeper badge](https://badges.greenkeeper.io/brunocodutra/webapp-webpack-plugin.svg)](https://greenkeeper.io/)
