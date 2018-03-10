@@ -7,7 +7,7 @@ test('should throw error when instantiated without a logo', t => {
   try {
     new WebappWebpackPlugin();
   } catch (err) {
-    t.is(err.message, 'WebappWebpackPlugin options are required');
+    t.is(err.message, 'An input file is required');
   }
 
   try {
