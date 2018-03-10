@@ -2,7 +2,7 @@ import test from 'ava';
 import path from 'path';
 import fs from 'fs-extra';
 import parseAuthor from 'parse-author';
-import WebappWebpackPlugin from '..';
+import WebappWebpackPlugin from '../src';
 
 import {logo, mkdir, compiler} from './util';
 

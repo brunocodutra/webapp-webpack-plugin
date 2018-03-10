@@ -2,12 +2,12 @@
   "name": "webapp-webpack-plugin",
   "version": "1.1.2",
   "description": "Let webpack generate your progressive web app icons for you",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
-    "index.js",
-    "lib/"
+    "dist/"
   ],
   "scripts": {
+    "build": "babel src/ -d dist/",
     "test": "ava --require @babel/register test/**.test.js"
   },
   "repository": {
@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/brunocodutra/webapp-webpack-plugin",
   "devDependencies": {
+    "@babel/cli": "7.0.0-beta.40",
     "@babel/preset-env": "7.0.0-beta.40",
     "@babel/register": "7.0.0-beta.40",
     "ava": "1.0.0-beta.3",

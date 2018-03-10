@@ -35,8 +35,7 @@ jobs:
     os: linux
     node_js: node
     env: ""
-    install: skip
-    script: skip
+    script: npm run build
     deploy:
       provider: npm
       email: brunocodutra@gmail.com
@@ -52,7 +51,6 @@ jobs:
     os: linux
     node_js: node
     env: ""
-    install: travis_retry npm install
     script:
     - |
       if [[ -n $(git diff --name-only package-lock.json) ]]

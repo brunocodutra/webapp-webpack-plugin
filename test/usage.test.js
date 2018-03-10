@@ -1,5 +1,5 @@
 import test from 'ava';
-import WebappWebpackPlugin from '..';
+import WebappWebpackPlugin from '../src';
 
 import {logo, mkdir} from './util';
 

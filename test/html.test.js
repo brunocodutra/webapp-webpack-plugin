@@ -2,7 +2,7 @@ import test from 'ava';
 import path from 'path';
 import fs from 'fs-extra';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import WebappWebpackPlugin from '..';
+import WebappWebpackPlugin from '../src';
 
 import {logo, mkdir, generate, compare, expected} from './util';
 

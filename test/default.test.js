@@ -1,7 +1,7 @@
 import test from 'ava';
 import path from 'path';
 import fs from 'fs-extra';
-import WebappWebpackPlugin from '..';
+import WebappWebpackPlugin from '../src';
 
 import {logo, generate, mkdir, compare, expected} from './util';
 
