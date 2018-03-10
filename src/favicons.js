@@ -1,4 +1,3 @@
-'use strict';
 const loaderUtils = require('loader-utils');
 const favicons = require('favicons');
 

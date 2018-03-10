@@ -1,4 +1,3 @@
-'use strict';
 const fs = require('fs');
 const parseAuthor = require('parse-author');
 const camelCase = require('camelcase');

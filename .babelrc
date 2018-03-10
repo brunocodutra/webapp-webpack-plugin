@@ -8,5 +8,8 @@
         "transform-regenerator"
       ]
     }]
+  ],
+  "plugins": [
+    "@babel/transform-strict-mode"
   ]
 }
