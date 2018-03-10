@@ -1,9 +1,10 @@
 # Webapp Webpack Plugin
 
 [![npm version](https://badge.fury.io/js/webapp-webpack-plugin.svg)](http://badge.fury.io/js/webapp-webpack-plugin)
+[![Build status](https://travis-ci.org/brunocodutra/webapp-webpack-plugin.svg)](https://travis-ci.org/brunocodutra/webapp-webpack-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/brunocodutra/webapp-webpack-plugin/badge.svg?branch=master)](https://coveralls.io/github/brunocodutra/webapp-webpack-plugin?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/brunocodutra/webapp-webpack-plugin.svg)](https://greenkeeper.io/)
 [![Dependency Status](https://david-dm.org/brunocodutra/webapp-webpack-plugin.svg)](https://david-dm.org/brunocodutra/webapp-webpack-plugin)
-[![Build status](https://travis-ci.org/brunocodutra/webapp-webpack-plugin.svg)](https://travis-ci.org/brunocodutra/webapp-webpack-plugin)
 
 Leverages on [favicons](https://github.com/haydenbleasel/favicons) to automatically generate your progressive web app for you.
 
