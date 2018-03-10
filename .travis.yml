@@ -36,6 +36,9 @@ jobs:
     node_js: node
     env: ""
     script: npm run coverage
+    after_success:
+    - travis_retry npm install coveralls
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
   - stage: deploy
     os: linux
