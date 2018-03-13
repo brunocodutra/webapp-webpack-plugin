@@ -6,7 +6,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/brunocodutra/webapp-webpack-plugin.svg)](https://greenkeeper.io/)
 [![Dependency Status](https://david-dm.org/brunocodutra/webapp-webpack-plugin.svg)](https://david-dm.org/brunocodutra/webapp-webpack-plugin)
 
-Leverages on [favicons](https://github.com/haydenbleasel/favicons) to automatically generate your progressive web app for you.
+Leverages on [favicons] to automatically generate your progressive web app for you.
 
 > Originally forked from [jantimon/favicons-webpack-plugin](https://github.com/jantimon/favicons-webpack-plugin)
 > <br/>[What's new?](https://github.com/brunocodutra/webapp-webpack-plugin/releases)
@@ -36,7 +36,9 @@ The default configuration will automatically generate webapp manifest files alon
 [44 different icon formats](https://github.com/brunocodutra/webapp-webpack-plugin/tree/master/test/fixtures/expected/default/assets)
 as appropriate for iOS devices, Android devices, Windows Phone and various desktop browsers out of your single `my-logo.png`.
 
-### Pro Tip
+> **Tip:** You might want to [fine tune](#advanced-usage) what vendors to support.
+
+### HTML Injection
 
 In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin) it will also inject the necessary html for you:
 
@@ -86,14 +88,14 @@ In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-
 ```javascript
 plugins: [
   new WebappWebpackPlugin({
-    // Your source logo
+    // Your source logo (required)
     logo: 'my-logo.png',
     // The prefix for all image files (might be a folder or a name)
-    prefix: 'icons-[hash]/',
-    // Inject the html into the html-webpack-plugin
+    prefix: 'assets-[hash]/',
+    // Inject html links/metadata (requires html-webpack-plugin)
     inject: true,
 
-    // Favicons configuration options (see https://github.com/haydenbleasel/favicons#usage)
+    // Favicons configuration options (see below)
     favicons: {
       ...
     }
@@ -101,7 +103,18 @@ plugins: [
 ]
 ```
 
-For example:
+To fine tune what icons/metadata is generated, refer to
+[favicons' documentation](https://github.com/haydenbleasel/favicons#usage).
+
+The options specified under `favicons:` are handed over as is to [favicons],
+except that if `appName`, `appDescription`, `version`, `developerName` or
+`developerURL` are left `undefined`, they will be automatically inferred
+respectively from `name`, `description`, `version`, `author.name` and
+`author.url` as defined in the nearest `package.json` if available.
+To disable automatically retrieving metadata from `package.json`, simply set
+to `null` the properties you want to omit.
+
+### Example:
 
 ```javascript
 const WebappWebpackPlugin = require('webapp-webpack-plugin')
@@ -111,10 +124,17 @@ const WebappWebpackPlugin = require('webapp-webpack-plugin')
 plugins: [
   new WebappWebpackPlugin({
     logo: 'my-logo.png', // svg works too!
-    favicons {
+    favicons: {
       appName: 'my-app',
+      appDescription: 'My awesome App',
+      developerName: 'Me',
+      developerURL: null, // prevent retrieving from the nearest package.json
       background: '#ddd',
-      theme_color: '#333'
+      theme_color: '#333',
+      icons: {
+        coast: false,
+        yandex: false
+      }
     }
   })
 ]
@@ -122,10 +142,15 @@ plugins: [
 
 ## Contribution
 
-You're very welcome to contribute to this project by opening [issues](https://github.com/brunocodutra/webapp-webpack-plugin/issues) and/or [pull requests](https://github.com/brunocodutra/webapp-webpack-plugin/pulls).
+You're very welcome to contribute to this project by opening
+[issues](https://github.com/brunocodutra/webapp-webpack-plugin/issues) and/or
+[pull requests](https://github.com/brunocodutra/webapp-webpack-plugin/pulls).
 
-Please keep in mind that every change and new feature should be covered by tests.
+Please keep in mind that every change and new feature should be covered by
+tests.
 
 ## License
 
 This project is licensed under [MIT](https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/LICENSE).
+
+[favicons]: https://github.com/haydenbleasel/favicons
