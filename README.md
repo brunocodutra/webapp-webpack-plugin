@@ -33,7 +33,7 @@ plugins: [
 ```
 
 The default configuration will automatically generate webapp manifest files along with
-[44 different icon formats](https://github.com/brunocodutra/webapp-webpack-plugin/tree/master/test/fixtures/expected/default/assets)
+[44 different icon formats](https://github.com/brunocodutra/webapp-webpack-plugin/tree/master/test/fixtures/expected/default)
 as appropriate for iOS devices, Android devices, Windows Phone and various desktop browsers out of your single `logo.png`.
 
 > **Tip:** You might want to [fine tune](#advanced-usage) what vendors to support.
