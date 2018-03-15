@@ -19,21 +19,27 @@ module.exports = class WebappWebpackPlugin {
   apply(compiler) {
     const oracle = new Oracle(compiler.context)
 
-    const {
-      appName = oracle.guessAppName(),
-      appDescription = oracle.guessDescription(),
-      version = oracle.guessVersion(),
-      developerName = oracle.guessDeveloperName(),
-      developerURL = oracle.guessDeveloperURL(),
-    } = this.options.favicons;
+    {
+      const {
+        appName = oracle.guessAppName(),
+        appDescription = oracle.guessDescription(),
+        version = oracle.guessVersion(),
+        developerName = oracle.guessDeveloperName(),
+        developerURL = oracle.guessDeveloperURL(),
+        url = '',
+        path = '',
+      } = this.options.favicons;
 
-    Object.assign(this.options.favicons, {
-      appName,
-      appDescription,
-      version,
-      developerName,
-      developerURL,
-    });
+      Object.assign(this.options.favicons, {
+        appName,
+        appDescription,
+        version,
+        developerName,
+        developerURL,
+        url,
+        path
+      });
+    }
 
     tap(compiler, 'make', 'WebappWebpackPlugin', async (compilation, callback) => {
       try {
