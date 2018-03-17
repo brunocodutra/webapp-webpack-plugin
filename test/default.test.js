@@ -5,10 +5,11 @@ const WebappWebpackPlugin = require('../src');
 
 const {logo, generate, mkdir, compare, expected} = require('./util');
 
+test.beforeEach(async t => t.context.root = await mkdir());
+
 test('should generate the expected default result', async t => {
-  t.context.root = await mkdir();
   const dist = path.join(t.context.root, 'dist');
-  const stats = await generate({
+  await generate({
     context: t.context.root,
     output: {
       path: dist,
@@ -16,8 +17,7 @@ test('should generate the expected default result', async t => {
     plugins: [new WebappWebpackPlugin({logo})]
   });
 
-  const diff = await compare(dist, path.resolve(expected, 'default'));
-  t.deepEqual(diff, []);
+  t.deepEqual(await compare(dist, path.resolve(expected, 'default')), []);
 });
 
 test.afterEach(t => fs.remove(t.context.root));

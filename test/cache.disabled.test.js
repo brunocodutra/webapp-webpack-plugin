@@ -1,27 +1,23 @@
 const test = require('ava');
 const path = require('path');
 const fs = require('fs-extra');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebappWebpackPlugin = require('../src');
 
-const {logo, mkdir, generate, compare, expected} = require('./util');
+const {logo, mkdir, generate} = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
-test('should work together with the html-webpack-plugin', async t => {
+test('should allow disabling caching', async t => {
   const dist = path.join(t.context.root, 'dist');
   await generate({
     context: t.context.root,
     output: {
       path: dist,
     },
-    plugins: [
-      new HtmlWebpackPlugin(),
-      new WebappWebpackPlugin({logo}),
-    ],
+    plugins: [new WebappWebpackPlugin({logo, cache: false})],
   });
 
-  t.deepEqual(await compare(dist, path.resolve(expected, 'html')), []);
+  t.deepEqual(fs.readdirSync(t.context.root), ['dist']);
 });
 
 test.afterEach(t => fs.remove(t.context.root));
