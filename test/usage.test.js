@@ -1,5 +1,5 @@
 const test = require('ava');
-const WebappWebpackPlugin = require('../src');
+const WebappWebpackPlugin = require('../');
 
 const {logo, mkdir} = require('./util');
 

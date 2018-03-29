@@ -46,21 +46,20 @@ module.exports = class WebappWebpackPlugin {
       });
     }
 
-    tap(compiler, 'make', 'WebappWebpackPlugin', async (compilation, callback) => {
-      try {
-        // Generate favicons
-        const result = await child.run(this.options, compiler.context, compilation);
-        if (this.options.inject) {
-          // Hook into the html-webpack-plugin processing and add the html
-          tap(compilation, 'html-webpack-plugin-before-html-processing', 'WebappWebpackPlugin', (htmlPluginData, callback) => {
-            htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, result + '$&');
-            return callback(null, htmlPluginData);
-          });
-        }
-        return callback();
-      } catch (err) {
-        return callback(err);
-      }
-    });
+    tap(compiler, 'make', 'WebappWebpackPlugin', (compilation, callback) =>
+      // Generate favicons
+      child.run(this.options, compiler.context, compilation)
+        .then(result => {
+          if (this.options.inject) {
+            // Hook into the html-webpack-plugin processing and add the html
+            tap(compilation, 'html-webpack-plugin-before-html-processing', 'WebappWebpackPlugin', (htmlPluginData, callback) => {
+              htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, result + '$&');
+              return callback(null, htmlPluginData);
+            });
+          }
+          return callback();
+        })
+        .catch(callback)
+    );
   }
 }

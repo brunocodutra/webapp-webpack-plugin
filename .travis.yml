@@ -42,13 +42,12 @@ jobs:
     os: linux
     node_js: node
     env: ""
-    script: npm run build
+    script: skip
     deploy:
       provider: npm
       email: brunocodutra@gmail.com
       api_key:
         secure: Dht67RlW0DeH6sEg3KJZBhlNc+IJMdUDcAUaVahqhXD1IhXEdsRrAfn1dsbLsbqjhTkBMg37Lq5/QUvLbdmQlvrJ9emu1sbHRAc1JD8RxHAnUbX08i2qJz1UiroJNaJ9gUGH/W8QK3f++pCoza/n/8nPXcy/kB9shBKrGHX+99Rt0xHgfPI5nn/A+KDU9WZ/0/+ITr+83dzwukYJU8lB1id45fv9Avo6c/v219dyfnbKQVYa0o45GsCT3YU3/A2qJa6q1l7I6tNHQ/OBdJ74uarVyUaba+vYxYc3UMJaROvVUErmZmFW1ZEPS5Tu0cHPQKQbvgrWq2ig4eqw7d9PbxCCVjbTFScek4ThMu5OXTPgOhsYoEW+jjQvhz6NS0y6HZUzWR5cPRdA0D5hArHWlZU7jgpVgdSI8cwu+JOBOQtkdzRdVBqhmlq85F7a+qRP58Zj8RgRAZwCBWC9zHNQNHYXO/5SDgtXuxCgh0QF47v81nE4WdNkJ5/tH28vZPNgFqhiVm5w3g6wEXckZNMBNO81OcYs73tAitBHv7R1HhqXGhE7fW1pxzXAAMHl+yVEOzmph/BFoIKQrd7Ag6rTid+/8PCprkMplnaYt8BL9/z5yZ5mzX3tZP5GJKpe32ySNv7VhSqE1b2jbmrHsAsZbKKJ7gk/IsLChidGvYDRReo=
-      skip_cleanup: true
       on:
         tags: true
         repo: brunocodutra/webapp-webpack-plugin

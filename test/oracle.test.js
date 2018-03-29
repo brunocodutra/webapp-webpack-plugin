@@ -2,7 +2,7 @@ const test = require('ava');
 const path = require('path');
 const fs = require('fs-extra');
 const parseAuthor = require('parse-author');
-const WebappWebpackPlugin = require('../src');
+const WebappWebpackPlugin = require('../');
 
 const {logo, mkdir, compiler} = require('./util');
 

@@ -1,7 +1,7 @@
 const test = require('ava');
 const path = require('path');
 const fs = require('fs-extra');
-const WebappWebpackPlugin = require('../src');
+const WebappWebpackPlugin = require('../');
 
 const {logo, generate, mkdir, compare, expected} = require('./util');
 
