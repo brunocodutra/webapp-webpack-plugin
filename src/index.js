@@ -31,8 +31,6 @@ module.exports = class WebappWebpackPlugin {
         version = oracle.guessVersion(),
         developerName = oracle.guessDeveloperName(),
         developerURL = oracle.guessDeveloperURL(),
-        url = '',
-        path = '',
       } = this.options.favicons;
 
       Object.assign(this.options.favicons, {
@@ -41,8 +39,6 @@ module.exports = class WebappWebpackPlugin {
         version,
         developerName,
         developerURL,
-        url,
-        path
       });
     }
 

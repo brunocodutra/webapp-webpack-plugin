@@ -9,7 +9,7 @@ test.beforeEach(async t => t.context.root = await mkdir());
 
 test('should correctly handle an empty prefix', async t => {
   const dist = path.join(t.context.root, 'dist');
-  const stats=  await generate({
+  await generate({
     context: t.context.root,
     output: {
       path: dist,
