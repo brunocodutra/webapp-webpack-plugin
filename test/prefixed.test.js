@@ -14,7 +14,7 @@ test('should allow configuring the output prefix', async t => {
     output: {
       path: dist,
     },
-    plugins: [new WebappWebpackPlugin({logo, prefix: 'custom/prefix'})],
+    plugins: [new WebappWebpackPlugin({logo, prefix: 'custom/prefix/[hash:8]'})],
   });
 
   t.deepEqual(await compare(dist, path.resolve(expected, 'prefixed')), []);
