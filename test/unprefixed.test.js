@@ -1,6 +1,7 @@
 const test = require('ava');
 const path = require('path');
 const fs = require('fs-extra');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebappWebpackPlugin = require('../');
 
 const {logo, generate, mkdir, compare, expected} = require('./util');
@@ -14,7 +15,10 @@ test('should correctly handle an empty prefix', async t => {
     output: {
       path: dist,
     },
-    plugins: [new WebappWebpackPlugin({logo, prefix: ''})],
+    plugins: [
+      new HtmlWebpackPlugin(),
+      new WebappWebpackPlugin({logo, prefix: ''}),
+    ],
   });
 
   t.deepEqual(await compare(dist, path.resolve(expected, 'unprefixed')), []);
