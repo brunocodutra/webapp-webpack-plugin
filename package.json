@@ -1,6 +1,6 @@
 {
   "name": "webapp-webpack-plugin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Let webpack generate your progressive web app icons for you",
   "main": "src/index.js",
   "files": [
