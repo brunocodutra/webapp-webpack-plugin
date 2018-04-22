@@ -19,20 +19,12 @@ env:
   - TARGET="webpack@3 html-webpack-plugin@2"
   - TARGET="webpack@4 html-webpack-plugin@3"
 
-matrix:
-  exclude:
-  - node_js: '4'
-    env: TARGET="webpack@4 html-webpack-plugin@3"
-
-  - node_js: '5'
-    env: TARGET="webpack@4 html-webpack-plugin@3"
-
 jobs:
   include:
   - stage: test
     os: linux
     node_js: node
-    env: ""
+    env: []
     script: travis_retry npm run coverage
     after_success:
     - travis_retry npm install coveralls
@@ -41,7 +33,7 @@ jobs:
   - stage: deploy
     os: linux
     node_js: node
-    env: ""
+    env: []
     script: skip
     deploy:
       provider: npm
@@ -56,7 +48,7 @@ jobs:
     if: type = pull_request
     os: linux
     node_js: node
-    env: ""
+    env: []
     script:
     - |
       if [[ -n $(git diff --name-only package-lock.json) ]]
