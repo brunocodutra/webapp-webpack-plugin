@@ -101,6 +101,9 @@ In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-
 
 > https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/html
 
+HTML injection is skipped for a particular `html-webpack-plugin` if either `inject` or `favicons`
+properties are set to `false` in its configuration object.
+
 ## Advanced Usage
 
 ```javascript
