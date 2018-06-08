@@ -1,9 +1,12 @@
 const path = require('path');
 const msgpack = require('msgpack-lite');
+const findCacheDir = require('find-cache-dir');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
 const {getAssetPath} = require('./compat');
 
-module.exports.run = ({prefix, favicons: options, logo, cache: cacheDirectory}, context, compilation) => {
+const wwp = 'webapp-webpack-plugin';
+
+module.exports.run = ({prefix, favicons: options, logo, cache}, context, compilation) => {
   // The entry file is just an empty helper
   const filename = '[hash]';
   const publicPath = compilation.outputOptions.publicPath;
@@ -11,16 +14,23 @@ module.exports.run = ({prefix, favicons: options, logo, cache: cacheDirectory}, 
   // Create an additional child compiler which takes the template
   // and turns it into an Node.JS html factory.
   // This allows us to use loaders during the compilation
-  const compiler = compilation.createChildCompiler('webapp-webpack-plugin', {filename, publicPath});
+  const compiler = compilation.createChildCompiler(wwp, {filename, publicPath});
   compiler.context = context;
 
   const loader = `!${require.resolve('./loader')}?${JSON.stringify({prefix, options})}`;
-  const cache = cacheDirectory
+
+  const cacheDirectory = cache && (
+      (typeof cache === 'string')
+    ? path.resolve(context, cache)
+    : findCacheDir({name: wwp, cwd: context}) || path.resolve(context, '.wwp-cache')
+  );
+
+  const cacher = cacheDirectory
     ? `!${require.resolve('cache-loader')}?${JSON.stringify({cacheDirectory})}`
     : ''
   ;
 
-  new SingleEntryPlugin(context, `!${cache}${loader}!${logo}`, path.basename(logo)).apply(compiler);
+  new SingleEntryPlugin(context, `!${cacher}${loader}!${logo}`, path.basename(logo)).apply(compiler);
 
   // Compile and return a promise
   return new Promise((resolve, reject) => {
