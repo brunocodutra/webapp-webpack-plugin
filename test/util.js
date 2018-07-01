@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const dircompare = require('dir-compare');
-
 const {tap} = require('../src/compat');
 
 const fixtures = path.resolve(__dirname, 'fixtures');
@@ -12,7 +11,7 @@ module.exports.expected = path.resolve(fixtures, 'expected');
 module.exports.logo = path.resolve(fixtures, 'logo.svg');
 module.exports.empty = path.resolve(fixtures, 'empty.png');
 module.exports.invalid = path.resolve(fixtures, 'invalid.png');
-
+module.exports.tap = tap;
 module.exports.mkdir = () => fs.mkdtemp(path.join(os.tmpdir(), 'WWP'));
 
 module.exports.compiler = (config) => {

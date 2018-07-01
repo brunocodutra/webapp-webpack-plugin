@@ -15,4 +15,11 @@ module.exports.tap = (tappable, hook, name, plugin) => (
 );
 
 /* istanbul ignore next */
+module.exports.trigger = (tappable, hook, arg, callback) => (
+  tappable.hooks /* Webpack >= 4.0 */
+  ? tappable.hooks[camelCase(hook)].callAsync(arg, callback)
+  : tappable.applyPluginsAsyncWaterfall(hook, arg, callback)
+);
+
+/* istanbul ignore next */
 module.exports.getContext = (loader) => (loader.options && loader.options.context) || loader.rootContext;

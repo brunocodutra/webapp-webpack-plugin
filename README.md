@@ -118,7 +118,6 @@ plugins: [
     prefix: 'assets/',
     // Inject html links/metadata (requires html-webpack-plugin)
     inject: true,
-
     // Favicons configuration options (see below)
     favicons: {
       ...
@@ -162,6 +161,34 @@ plugins: [
     }
   })
 ]
+```
+
+## Hooks
+
+To allow other plugins to intercept and customise assets before they are emitted, the following hooks may be tapped
+
+### webappWebpackPluginBeforeEmit
+
+> AsyncSeriesWaterfallHook
+
+Example implementation:
+
+````js
+  new class {
+    apply(compiler) {
+      compiler.hooks.make.tapAsync("A", (compilation, callback) => {
+        compilation.hooks.webappWebpackPluginBeforeEmit.tapAsync("B", (result, callback) => {
+          // The result of favicons library can be modified here
+          // and it will be returned to WebApp Plugin to be emitted.
+          // Add your custom functions below
+          console.log(result);
+          // Return the custom result
+          return callback(null, result);
+        });
+        return callback();
+      })
+    }
+  }
 ```
 
 ## Contribution

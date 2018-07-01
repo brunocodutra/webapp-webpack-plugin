@@ -2,7 +2,7 @@ const path = require('path');
 const msgpack = require('msgpack-lite');
 const findCacheDir = require('find-cache-dir');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const {getAssetPath} = require('./compat');
+const {getAssetPath, trigger} = require('./compat');
 
 const wwp = 'webapp-webpack-plugin';
 
@@ -32,6 +32,11 @@ module.exports.run = ({prefix, favicons: options, logo, cache}, context, compila
 
   new SingleEntryPlugin(context, `!${cacher}${loader}!${logo}`, path.basename(logo)).apply(compiler);
 
+  if (compilation.hooks) {
+    const AsyncSeriesWaterfallHook = require('tapable').AsyncSeriesWaterfallHook;
+    compilation.hooks.webappWebpackPluginBeforeEmit = new AsyncSeriesWaterfallHook(['result']);
+  }
+
   // Compile and return a promise
   return new Promise((resolve, reject) => {
     compiler.runAsChild((err, [chunk] = [], {hash, errors = [], assets = {}} = {}) => {
@@ -44,14 +49,21 @@ module.exports.run = ({prefix, favicons: options, logo, cache}, context, compila
       const result = msgpack.decode(Buffer.from(eval(assets[output].source()), 'base64'));
 
       delete compilation.assets[output];
-      for (const {name, contents} of result.assets) {
-        compilation.assets[name] = {
-          source: () => contents,
-          size: () => contents.length,
-        };
-      }
 
-      return resolve(result.html);
+      trigger(compilation, 'webapp-webpack-plugin-before-emit', result, (error, {html = '', assets = []} = {}) => {
+        if (error) {
+          return reject(error);
+        }
+
+        for (const {name, contents} of assets) {
+          compilation.assets[name] = {
+            source: () => contents,
+            size: () => contents.length,
+          };
+        }
+
+        return resolve(html);
+      });
     });
   });
 };
