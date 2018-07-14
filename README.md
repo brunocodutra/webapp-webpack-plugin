@@ -173,7 +173,7 @@ To allow other plugins to intercept and customise assets before they are emitted
 
 Example implementation:
 
-````js
+```js
   new class {
     apply(compiler) {
       compiler.hooks.make.tapAsync("A", (compilation, callback) => {
