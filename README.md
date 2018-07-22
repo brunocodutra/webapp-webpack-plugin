@@ -1,6 +1,4 @@
-<img src="https://github.com/Pelikens/webapp-webpack-plugin/blob/master/New_logo_files/logo_wwp_color/logo_wwp_color_low_res.png?raw=true"/> 
-
-# Webapp Webpack Plugin
+<img src="logo/logo_wwp_color/logo_wwp_color_low_res.png?raw=true"/>
 
 [![npm version](https://badge.fury.io/js/webapp-webpack-plugin.svg)](http://badge.fury.io/js/webapp-webpack-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/brunocodutra/webapp-webpack-plugin/badge.svg?branch=master)](https://coveralls.io/github/brunocodutra/webapp-webpack-plugin?branch=master)
@@ -104,7 +102,7 @@ In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-
 > https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/html
 
 HTML injection is skipped for a particular `html-webpack-plugin` if either `inject` or `favicons`
-properties are set to `false` in its configuration object, unless `inject` is set to `'force'` in  
+properties are set to `false` in its configuration object, unless `inject` is set to `'force'` in
 the configuration of `webapp-webpack-plugin`.
 
 ## Advanced Usage
