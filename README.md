@@ -102,7 +102,8 @@ In combination with [html-webpack-plugin](https://github.com/ampedandwired/html-
 > https://github.com/brunocodutra/webapp-webpack-plugin/blob/master/test/fixtures/expected/html
 
 HTML injection is skipped for a particular `html-webpack-plugin` if either `inject` or `favicons`
-properties are set to `false` in its configuration object.
+properties are set to `false` in its configuration object, unless `inject` is set to `'force'` in  
+the configuration of `webapp-webpack-plugin`.
 
 ## Advanced Usage
 
@@ -117,6 +118,9 @@ plugins: [
     // Prefix path for generated assets
     prefix: 'assets/',
     // Inject html links/metadata (requires html-webpack-plugin)
+    // false: disables injection
+    // true: enables injection if that is not disabled in html-webpack-plugin
+    // 'force': enables injection even if that is disabled in html-webpack-plugin
     inject: true,
     // Favicons configuration options (see below)
     favicons: {
