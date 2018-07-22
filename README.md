@@ -1,3 +1,5 @@
+<img src="https://github.com/Pelikens/webapp-webpack-plugin/blob/master/New_logo_files/logo_wwp_color/logo_wwp_color_low_res.png?raw=true"/> 
+
 # Webapp Webpack Plugin
 
 [![npm version](https://badge.fury.io/js/webapp-webpack-plugin.svg)](http://badge.fury.io/js/webapp-webpack-plugin)
