@@ -14,6 +14,14 @@ module.exports.tap = (tappable, hook, name, plugin) => (
   : tappable.plugin(hook, plugin)
 );
 
+module.exports.tapHtml = (tappable, name, plugin) => {
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  return HtmlWebpackPlugin.getHooks /* HtmlWebpackPlugin >= 4.0 */
+    ? HtmlWebpackPlugin.getHooks(tappable).afterTemplateExecution.tapAsync(name, plugin)
+    : module.exports.tap(tappable, 'html-webpack-plugin-before-html-processing', name, plugin)
+  ;
+};
+
 /* istanbul ignore next */
 module.exports.trigger = (tappable, hook, arg, callback) => (
   tappable.hooks /* Webpack >= 4.0 */

@@ -50,7 +50,7 @@ module.exports.run = ({prefix, favicons: options, logo, cache}, context, compila
 
       delete compilation.assets[output];
 
-      trigger(compilation, 'webapp-webpack-plugin-before-emit', result, (error, {html = '', assets = []} = {}) => {
+      trigger(compilation, 'webapp-webpack-plugin-before-emit', result, (error, {tags = [], assets = []} = {}) => {
         if (error) {
           return reject(error);
         }
@@ -62,7 +62,7 @@ module.exports.run = ({prefix, favicons: options, logo, cache}, context, compila
           };
         }
 
-        return resolve(html);
+        return resolve(tags);
       });
     });
   });
