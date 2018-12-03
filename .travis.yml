@@ -9,8 +9,10 @@ os:
 - linux
 - osx
 
-git:
-  depth: 1
+stages:
+- check
+- test
+- deploy
 
 env:
   global:
@@ -21,7 +23,8 @@ env:
 
 jobs:
   include:
-  - stage: test
+  - name: coverage
+    stage: check
     os: linux
     node_js: node
     env: []
