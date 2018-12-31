@@ -1,6 +1,7 @@
 const path = require('path');
 const msgpack = require('msgpack-lite');
 const findCacheDir = require('find-cache-dir');
+const {AsyncSeriesWaterfallHook} = require('tapable');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
 const {getAssetPath, trigger} = require('./compat');
 
@@ -33,7 +34,6 @@ module.exports.run = ({prefix, favicons: options, logo, cache}, context, compila
   new SingleEntryPlugin(context, `!${cacher}${loader}!${logo}`, path.basename(logo)).apply(compiler);
 
   if (compilation.hooks) {
-    const AsyncSeriesWaterfallHook = require('tapable').AsyncSeriesWaterfallHook;
     compilation.hooks.webappWebpackPluginBeforeEmit = new AsyncSeriesWaterfallHook(['result']);
   }
 
