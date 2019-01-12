@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const WebappWebpackPlugin = require('../');
 
-const {empty, invalid, generate, mkdir} = require('./util');
+const { empty, invalid, generate, mkdir } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -17,7 +17,7 @@ test('should fail gracefully if path to logo is wrong', async t => {
       output: {
         path: dist,
       },
-      plugins: [new WebappWebpackPlugin({logo})]
+      plugins: [new WebappWebpackPlugin({ logo })]
     });
   } catch (err) {
     t.is(err.message, `Can't resolve '${logo}' in '${t.context.root}'`);
@@ -32,7 +32,7 @@ test('should fail gracefully if the image stream is empty', async t => {
       output: {
         path: dist,
       },
-      plugins: [new WebappWebpackPlugin({logo: empty})]
+      plugins: [new WebappWebpackPlugin({ logo: empty })]
     });
   } catch (err) {
     t.is(err.message, 'Invalid image buffer');
@@ -47,7 +47,7 @@ test('should fail gracefully if logo is not a valid image file', async t => {
       output: {
         path: dist,
       },
-      plugins: [new WebappWebpackPlugin({logo: invalid})]
+      plugins: [new WebappWebpackPlugin({ logo: invalid })]
     });
   } catch (err) {
     t.is(err.message, 'Invalid image buffer');

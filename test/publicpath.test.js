@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebappWebpackPlugin = require('../');
 
-const {logo, generate, mkdir, compare, expected} = require('./util');
+const { logo, generate, mkdir, compare, expected } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -18,7 +18,7 @@ test('should take the public path into account', async t => {
     },
     plugins: [
       new HtmlWebpackPlugin(),
-      new WebappWebpackPlugin({logo}),
+      new WebappWebpackPlugin({ logo }),
     ],
   });
 

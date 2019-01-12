@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const WebappWebpackPlugin = require('../');
 
-const {logo, mkdir, generate} = require('./util');
+const { logo, mkdir, generate } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -16,7 +16,7 @@ test('should allow configuring cache directory', async t => {
     output: {
       path: dist,
     },
-    plugins: [new WebappWebpackPlugin({logo, cache})],
+    plugins: [new WebappWebpackPlugin({ logo, cache })],
   });
 
   t.pass(fs.existsSync(cache));

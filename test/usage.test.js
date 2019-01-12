@@ -1,7 +1,7 @@
 const test = require('ava');
 const WebappWebpackPlugin = require('../');
 
-const {logo, mkdir} = require('./util');
+const { logo, mkdir } = require('./util');
 
 test('should throw error when instantiated without a logo', t => {
   try {
@@ -23,6 +23,6 @@ test('should take a string as argument', t => {
 });
 
 test('should take an object with just the logo as argument', t => {
-  const plugin = new WebappWebpackPlugin({logo});
+  const plugin = new WebappWebpackPlugin({ logo });
   t.is(plugin.options.logo, logo);
 });
