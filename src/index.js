@@ -1,4 +1,5 @@
 const assert = require('assert');
+const path = require('path');
 const child = require('./compiler');
 const Oracle = require('./oracle');
 const { tap, tapHtml } = require('./compat');
@@ -14,6 +15,25 @@ module.exports = class WebappWebpackPlugin {
       favicons: {},
       prefix: 'assets/',
     }, options);
+
+    this.tags = {};
+    this.tags.promise = new Promise((resolve, reject) => {
+      this.tags.resolve = resolve;
+      this.tags.reject = reject;
+    });
+    this.tags.promise.catch(() => {});
+  }
+
+  rule() {
+    assert(path.isAbsolute(this.options.logo), '`logo` must be an absolute path');
+
+    const rule = {
+      include: path.resolve(this.options.logo),
+      loader: require.resolve('./rule_loader'),
+      options: {plugin: this},
+    };
+
+    return rule;
   }
 
   apply(compiler) {
@@ -48,6 +68,8 @@ module.exports = class WebappWebpackPlugin {
       // Generate favicons
       child.run(this.options, compiler.context, compilation)
         .then(tags => {
+          this.tags.resolve(tags);
+
           // Hook into the html-webpack-plugin processing and add the html
           tapHtml(compilation, 'WebappWebpackPlugin', (htmlPluginData, callback) => {
             if (this.options.inject(htmlPluginData.plugin)) {
@@ -58,7 +80,10 @@ module.exports = class WebappWebpackPlugin {
           });
           return callback();
         })
-        .catch(callback)
+        .catch(err => {
+          this.tags.reject(err);
+          return callback(err);
+        })
     );
   }
 }

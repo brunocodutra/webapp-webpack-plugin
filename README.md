@@ -226,6 +226,34 @@ Example implementation:
   }
 ```
 
+## Rule
+
+A Webpack loader rule is also provided to make the generated HTML tags available to your JS app.
+
+```js
+const plugin = new WebappWebpackPlugin({ logo: '/path/to/logo.png' });
+
+...
+
+plugins: [
+  plugin
+]
+module: {
+  rules: [
+    plugin.rule()
+  ],
+}
+```
+
+```js
+// now inside Webpack bundle
+// you can require logo path
+// and get an array of strings with html tags
+const favicons = require( '/path/to/logo.png' );
+```
+
+> **Note**: `logo` must be an absolute path for `rule` to work.
+
 ## Contribution
 
 You're very welcome to contribute to this project by opening

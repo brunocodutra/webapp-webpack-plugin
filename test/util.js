@@ -37,16 +37,18 @@ module.exports.compiler = (config) => {
   return webpack(config);
 }
 
-module.exports.run = (compiler) => {
-  tap(compiler, 'emit', 'Test', ({ assets }, callback) => {
-    Object.keys(assets)
-      .filter(asset => asset.match(/.js$/))
-      .forEach(asset => {
-        delete assets[asset];
-      });
+module.exports.run = (compiler, { skipJs = true } = {}) => {
+  if (skipJs) {
+    tap(compiler, 'emit', 'Test', ({ assets }, callback) => {
+      Object.keys(assets)
+        .filter(asset => asset.match(/.js$/))
+        .forEach(asset => {
+          delete assets[asset];
+        });
 
-    return callback();
-  });
+      return callback();
+    });
+  }
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => (err || stats.hasErrors())
@@ -56,7 +58,7 @@ module.exports.run = (compiler) => {
   });
 };
 
-module.exports.generate = (config) => module.exports.run(module.exports.compiler(config));
+module.exports.generate = (config, options) => module.exports.run(module.exports.compiler(config), options);
 
 module.exports.compare = (a, b) => dircompare.compare(a, b, { compareContent: true }).then(diff =>
   diff.diffSet.filter(({ state }) => state !== 'equal')
