@@ -51,12 +51,12 @@ test('should generate working rule for getting favicon tags', async t => {
       rules: [rule],
     },
   }, {
-    skipJs: false,
-  });
+      skipJs: false,
+    });
 
   const actualTags = require(path.resolve(dist, 'main.js'));
-  t.true(Array.isArray(actualTags));
-  t.true(actualTags.length > 0);
+  t.truthy(Array.isArray(actualTags));
+  t.truthy(actualTags.length > 0);
 
   const expectedTags = require('./fixtures/expected/rule/main');
   t.deepEqual(actualTags, expectedTags);
