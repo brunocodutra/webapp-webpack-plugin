@@ -21,7 +21,7 @@ module.exports = class WebappWebpackPlugin {
       this.tags.resolve = resolve;
       this.tags.reject = reject;
     });
-    this.tags.promise.catch(() => {});
+    this.tags.promise.catch(() => { });
   }
 
   rule() {
@@ -30,7 +30,7 @@ module.exports = class WebappWebpackPlugin {
     const rule = {
       include: path.resolve(this.options.logo),
       loader: require.resolve('./rule_loader'),
-      options: {plugin: this},
+      options: { plugin: this },
     };
 
     return rule;
