@@ -18,7 +18,7 @@ module.exports.compiler = (config) => {
   config = merge(
     {
       entry: path.resolve(fixtures, 'entry.js'),
-      plugins: []
+      plugins: [],
     },
     config
   );
@@ -37,30 +37,16 @@ module.exports.compiler = (config) => {
   return webpack(config);
 }
 
-module.exports.run = (compiler, { skipJs = true } = {}) => {
-  if (skipJs) {
-    tap(compiler, 'emit', 'Test', ({ assets }, callback) => {
-      Object.keys(assets)
-        .filter(asset => asset.match(/.js$/))
-        .forEach(asset => {
-          delete assets[asset];
-        });
+module.exports.run = (compiler) => new Promise((resolve, reject) => {
+  compiler.run((err, stats) => (err || stats.hasErrors())
+    ? reject(err || stats.toJson().errors)
+    : resolve(stats)
+  );
+});
 
-      return callback();
-    });
-  }
+module.exports.generate = (config) => module.exports.run(module.exports.compiler(config));
 
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => (err || stats.hasErrors())
-      ? reject(err || stats.toJson().errors)
-      : resolve(stats)
-    );
-  });
-};
-
-module.exports.generate = (config, options) => module.exports.run(module.exports.compiler(config), options);
-
-module.exports.compare = (a, b) => dircompare.compare(a, b, { compareContent: true }).then(diff =>
+module.exports.compare = (a, b) => dircompare.compare(a, b, { compareContent: true, excludeFilter: '*.js' }).then(diff =>
   diff.diffSet.filter(({ state }) => state !== 'equal')
     .map(({ path1, name1, path2, name2 }) => `${path.join(path1 || '', name1 + '')} ≠ ${path.join(path2 || '', name2 + '')}`)
 );

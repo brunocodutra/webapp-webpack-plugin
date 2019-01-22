@@ -50,9 +50,7 @@ test('should generate working rule for getting favicon tags', async t => {
     module: {
       rules: [rule],
     },
-  }, {
-      skipJs: false,
-    });
+  });
 
   const actualTags = require(path.resolve(dist, 'main.js'));
   t.truthy(Array.isArray(actualTags));
