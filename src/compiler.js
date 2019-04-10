@@ -7,10 +7,10 @@ const { getAssetPath, trigger } = require('./compat');
 
 const wwp = 'webapp-webpack-plugin';
 
-module.exports.run = ({ prefix, favicons: options, logo, cache }, context, compilation) => {
+module.exports.run = ({ prefix, favicons: options, logo, cache, publicPath: publicPathOption, outputPath }, context, compilation) => {
   // The entry file is just an empty helper
   const filename = '[hash]';
-  const { publicPath = '/' } = compilation.outputOptions;
+  const publicPath = publicPathOption || compilation.outputOptions.publicPath || '/';
 
   // Create an additional child compiler which takes the template
   // and turns it into an Node.JS html factory.
@@ -18,7 +18,7 @@ module.exports.run = ({ prefix, favicons: options, logo, cache }, context, compi
   const compiler = compilation.createChildCompiler(wwp, { filename, publicPath });
   compiler.context = context;
 
-  const loader = `!${require.resolve('./loader')}?${JSON.stringify({ prefix, options, path: publicPath })}`;
+  const loader = `!${require.resolve('./loader')}?${JSON.stringify({ prefix, options, path: publicPath, outputPath })}`;
 
   const cacheDirectory = cache && (
     (typeof cache === 'string')
