@@ -7,7 +7,7 @@ const pkg = require('../package.json')
 
 const trailingSlash = (path) => (path.substr(-1) !== '/') ? path + '/' : path;
 
-module.exports = function (content) {
+module.exports = async function (content) {
   /* istanbul ignore next */
   if (!this.async) throw new Error('async is required');
 
@@ -19,13 +19,15 @@ module.exports = function (content) {
     content: msgpack.encode([content, query.options, pkg.version]), // hash must depend on logo + config + version
   }));
   const outputPath = query.outputPath ? trailingSlash(query.outputPath) : prefix;
-  // Generate icons
-  return favicons(content, Object.assign(query.options, { path: url.resolve(path, prefix) }))
-    .then(({ html: tags, images, files }) => {
-      const assets = [...images, ...files].map(({ name, contents }) => ({ name: outputPath + name, contents }));
-      return callback(null, `module.exports = '${msgpack.encode({ tags, assets }).toString('base64')}'`);
-    })
-    .catch(callback);
+
+  try {
+    // Generate icons
+    const { html: tags, images, files } = await favicons(content, Object.assign(query.options, { path: url.resolve(path, prefix) }))
+    const assets = [...images, ...files].map(({ name, contents }) => ({ name: outputPath + name, contents }));
+    return callback(null, `module.exports = '${msgpack.encode({ tags, assets }).toString('base64')}'`);
+  } catch (err) {
+    return callback(err);
+  }
 };
 
 module.exports.raw = true;

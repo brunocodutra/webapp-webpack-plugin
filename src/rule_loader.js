@@ -1,10 +1,11 @@
-module.exports = function () {
+module.exports = async function () {
   const callback = this.async();
   const { plugin } = this.query;
 
-  plugin.tags.promise
-    .then(tags => {
-      callback(null, `module.exports = ['${tags.join("', '")}'];`);
-    })
-    .catch(callback);
+  try {
+    const tags = await plugin.tags.promise;
+    return callback(null, `module.exports = ['${tags.join("', '")}'];`);
+  } catch (err) {
+    return callback(err);
+  }
 };
