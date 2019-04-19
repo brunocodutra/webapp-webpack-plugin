@@ -64,26 +64,26 @@ module.exports = class WebappWebpackPlugin {
         || htmlPlugin.options.favicons !== false && htmlPlugin.options.inject && inject;
     }
 
-    tap(compiler, 'make', 'WebappWebpackPlugin', (compilation, callback) =>
-      // Generate favicons
-      child.run(this.options, compiler.context, compilation)
-        .then(tags => {
-          this.tags.resolve(tags);
+    tap(compiler, 'make', 'WebappWebpackPlugin', async (compilation, callback) => {
+      try {
+        // Generate favicons
+        const tags = await child.run(this.options, compiler.context, compilation);
+        this.tags.resolve(tags);
 
-          // Hook into the html-webpack-plugin processing and add the html
-          tapHtml(compilation, 'WebappWebpackPlugin', (htmlPluginData, callback) => {
-            if (this.options.inject(htmlPluginData.plugin)) {
-              const idx = (htmlPluginData.html + '</head>').search(/<\/head>/i);
-              htmlPluginData.html = [htmlPluginData.html.slice(0, idx), ...tags, htmlPluginData.html.slice(idx)].join('');
-            }
-            return callback(null, htmlPluginData);
-          });
-          return callback();
-        })
-        .catch(err => {
-          this.tags.reject(err);
-          return callback(err);
-        })
-    );
+        // Hook into the html-webpack-plugin processing and add the html
+        tapHtml(compilation, 'WebappWebpackPlugin', (htmlPluginData, callback) => {
+          if (this.options.inject(htmlPluginData.plugin)) {
+            const idx = (htmlPluginData.html + '</head>').search(/<\/head>/i);
+            htmlPluginData.html = [htmlPluginData.html.slice(0, idx), ...tags, htmlPluginData.html.slice(idx)].join('');
+          }
+          return callback(null, htmlPluginData);
+        });
+        return callback();
+
+      } catch (err) {
+        this.tags.reject(err);
+        return callback(err);
+      }
+    });
   }
 }
