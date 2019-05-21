@@ -185,6 +185,7 @@ plugins: [
 ```javascript
 const WebappWebpackPlugin = require('webapp-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { basename } = require('path')
 
 ...
 
@@ -199,7 +200,8 @@ plugins: [
     }),
     new WebappWebpackPlugin({
         logo: 'logo.svg',
-        inject: htmlPlugin => htmlPlugin.options.filename === 'a.html',
+        inject: htmlPlugin => 
+          basename(htmlPlugin.options.filename) === 'a.html',
     }),
 ],
 ```
