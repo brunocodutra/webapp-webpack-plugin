@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/brunocodutra/webapp-webpack-plugin",
   "devDependencies": {
-    "ava": "^1.4.1",
+    "ava": "^2.1.0",
     "dir-compare": "^1.7.2",
     "fs-extra": "^8.0.1",
     "html-webpack-plugin": "^3.2.0",
