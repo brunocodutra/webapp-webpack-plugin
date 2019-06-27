@@ -1,1 +1,1 @@
-module.exports = require('./logo.svg');
+module.exports = require('./logo.png');

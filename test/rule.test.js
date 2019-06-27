@@ -1,10 +1,9 @@
 const test = require('ava');
 const path = require('path');
 const fs = require('fs-extra');
-const webpack = require('webpack');
 const WebappWebpackPlugin = require('../');
 
-const { logo, generate, mkdir, compare, expected } = require('./util');
+const { logo, generate, mkdir } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -28,7 +27,7 @@ test('should fail to generate rule with module logo', t => {
 
 test('should succeed to generate rule with absolute logo', t => {
   const plugin = new WebappWebpackPlugin({ logo: '/path' });
-  const rule = plugin.rule();
+  plugin.rule();
   t.pass();
 });
 
