@@ -1,4 +1,5 @@
 const assert = require('assert');
+const parse5 = require('parse5');
 const path = require('path');
 const child = require('./compiler');
 const Oracle = require('./oracle');
@@ -70,14 +71,24 @@ module.exports = class WebappWebpackPlugin {
         this.tags.resolve(tags);
 
         // Hook into the html-webpack-plugin processing and add the html
-        if (compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing) {
-          await compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapPromise('WebappWebpackPlugin', async htmlPluginData => {
+        try {
+          const HtmlWebpackPlugin = require('html-webpack-plugin');
+          await HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapPromise('WebappWebpackPlugin', async htmlPluginData => {
             if (this.options.inject(htmlPluginData.plugin)) {
-              const idx = (htmlPluginData.html + '</head>').search(/<\/head>/i);
-              htmlPluginData.html = [htmlPluginData.html.slice(0, idx), ...tags, htmlPluginData.html.slice(idx)].join('');
+              htmlPluginData.plugin.options.inject = true;
+              [].push.apply(
+                htmlPluginData.assetTags.meta,
+                tags.map(tag => parse5.parseFragment(tag).childNodes[0]).map(({ tagName, attrs }) => ({
+                  tagName,
+                  voidTag: true,
+                  attributes: attrs.reduce((obj, { name, value }) => Object.assign(obj, { [name]: value }), {}),
+                })),
+              );
             }
             return htmlPluginData;
           });
+        } catch (_) {
+          // html-webpack-plugin is not available, skip html tag injection.
         }
       } catch (err) {
         this.tags.reject(err);

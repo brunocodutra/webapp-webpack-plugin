@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const WebappWebpackPlugin = require('../');
 
-const { logo, generate, mkdir } = require('./util');
+const { logo, generate, mkdir, expected } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -52,10 +52,7 @@ test('should generate working rule for getting favicon tags', async t => {
   });
 
   const actualTags = require(path.resolve(dist, 'main.js'));
-  t.truthy(Array.isArray(actualTags));
-  t.truthy(actualTags.length > 0);
-
-  const expectedTags = require('./fixtures/expected/rule/main');
+  const expectedTags = require(path.resolve(expected, 'rule/main.js'));
   t.deepEqual(actualTags, expectedTags);
 });
 
