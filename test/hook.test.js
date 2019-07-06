@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const WebappWebpackPlugin = require('../');
 
-const { logo, generate, mkdir, compare, expected, tap } = require('./util');
+const { logo, generate, mkdir, compare, expected } = require('./util');
 
 test.beforeEach(async t => t.context.root = await mkdir());
 
@@ -20,14 +20,12 @@ test('should trigger webappWebpackPluginBeforeEmit hook', async t => {
       new WebappWebpackPlugin({ logo }),
       new class {
         apply(compiler) {
-          tap(compiler, "make", "Plugin", (compilation, callback) => {
-            tap(compilation, "webapp-webpack-plugin-before-emit", "Plugin", (result, callback) => {
+          compiler.hooks.make.tapPromise('Test', async compilation =>
+            compilation.hooks.webappWebpackPluginBeforeEmit.tapPromise('Test', async result => {
               t.pass();
-              return callback(null, result);
-            });
-
-            return callback();
-          })
+              return result;
+            })
+          );
         }
       },
     ]
