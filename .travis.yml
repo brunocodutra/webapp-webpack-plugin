@@ -33,6 +33,7 @@ jobs:
     script: skip
     deploy:
       provider: npm
+      tag: $(if [[ "$TRAVIS_BRANCH" == "master" ]]; then echo latest; else echo next; fi)
       email: brunocodutra@gmail.com
       api_key:
         secure: AwrQA4iU32lS1A7kjbjq+l+4JwfRBhBohFZ1Y3xUvuHsKJbmziXk0fgKyszfavVL/UpxvSvLFKt31B6+bSzp5uVzcojYQgsHq5PNXNfYq1sVXXIiWsTgKm3j/FU5LvdEvdxqPl8Y6sip/O77UeG6C6w6Z9HzpWJhvbhzro7DxCqycdH4tZD8ubvr+hn2hTmAVOqUuCEPyNGnerOBifEubhoiDnpdVrp5TfGaL5A2lhZk1lPTN0+3ekJDwvQZCRh0xnkksTaVs3R9Fz848HkfwZsyoQuV8NGaO9X6CL6jpT9FQecOsvtS3uwilEWh+LQJFEU8xGevCKzaN68VDDGhL1RSbCV0kxsEpINmg5S0IGf3Ds1GXJvrURriVTwXaeLcKl0DclnogZdkqma8YzmvH5Al+L63GY+RP0OWTlJJLjO00C9B5C4VlDpwCW+YmLEibG55XwCQPq4grFw1IgrLLwNZ7Q7K9vEGkDqnr9lsewEla/zWakRnoJuDo3QUBDsFArpCkR48e5Pupk9AqqB7xOJ24uwUpt2Dbz/SgaL4LCL7SohBkDf2S2MF1BvBTS2kdvf3vKr3fzSD6HpvBSp4wNgOmaGBLV4Y/3zRXWVRi1Zvk6O5s7ffZj8HCZZLQ8ut8fIFMk+8lCRgLf2jHQCQhONayrtxdpfob69zYWxfsLQ=
