@@ -3,11 +3,10 @@ const msgpack = require('msgpack-lite');
 const findCacheDir = require('find-cache-dir');
 const { AsyncSeriesWaterfallHook } = require('tapable');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const { getAssetPath, trigger } = require('./compat');
 
 const wwp = 'webapp-webpack-plugin';
 
-module.exports.run = ({ prefix, favicons: options, logo, cache, publicPath: publicPathOption, outputPath }, context, compilation) => {
+module.exports.run = async ({ prefix, favicons: options, logo, cache, publicPath: publicPathOption, outputPath }, context, compilation) => {
   // The entry file is just an empty helper
   const filename = '[hash]';
   const publicPath = publicPathOption || compilation.outputOptions.publicPath || '/';
@@ -38,32 +37,30 @@ module.exports.run = ({ prefix, favicons: options, logo, cache, publicPath: publ
   }
 
   // Compile and return a promise
-  return new Promise((resolve, reject) => {
-    compiler.runAsChild((err, [chunk] = [], { hash, errors = [], assets = {} } = {}) => {
+  const { chunk, hash, assets } = await new Promise((resolve, reject) => {
+    return compiler.runAsChild((err, [chunk] = [], { hash, errors = [], assets = {} } = {}) => {
       if (err || errors.length) {
         return reject(err || errors[0].error);
       }
 
-      // Replace [hash] placeholders in filename
-      const output = getAssetPath(compilation, filename, { hash, chunk });
-      const result = msgpack.decode(Buffer.from(eval(assets[output].source()), 'base64'));
-
-      delete compilation.assets[output];
-
-      trigger(compilation, 'webapp-webpack-plugin-before-emit', result, (error, { tags = [], assets = [] } = {}) => {
-        if (error) {
-          return reject(error);
-        }
-
-        for (const { name, contents } of assets) {
-          compilation.assets[name] = {
-            source: () => contents,
-            size: () => contents.length,
-          };
-        }
-
-        return resolve(tags);
-      });
+      return resolve({ chunk, hash, assets });
     });
   });
+
+  // Replace [hash] placeholders in filename
+  const output = compilation.mainTemplate.getAssetPath(filename, { hash, chunk });
+  const result = msgpack.decode(Buffer.from(eval(assets[output].source()), 'base64'));
+
+  delete compilation.assets[output];
+
+  const { tags, assets: files } = await compilation.hooks.webappWebpackPluginBeforeEmit.promise(result);
+
+  for (const { name, contents } of files) {
+    compilation.assets[name] = {
+      source: () => contents,
+      size: () => contents.length,
+    };
+  }
+
+  return tags;
 };

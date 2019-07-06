@@ -15,9 +15,6 @@ stages:
 env:
   global:
     secure: dHZkfjL0eagnG2UBm4cR3DVFgwyPAc4gr48sBfIPrdee6Zm3uz9ctQcSjTmKtOKKQd0g4BNMTgvpi44JuZX79N67fygWmWMCSKSPInkSsnPJLOVArhC0F+T8Eei19hwaARwFZ++MCmsIUoyFtjLsCaG4tO+6jM1uu/0FXDwL//XcYZefMRLMzGv1j3RLJk9dQfY6InilCEqjvcbMlktNbECJs04GVWSl3RsYTffHYUft+0qrwKKA+eDKLCf3qC5hJ6TLW0foF+fNu16jh/gZtw94b8dhpdEqd9gO0bXz4/jt+sI+ubczio0IX1EdG2WLFJxPQvVNz38Bqof1fBe3hesL64rsr3PFuCPs8kdMIHHkKoDLfRS/K/3+PW25XteHkFOEi8UJg6BB5sw1zDhqKc42gybMDphYOIkUkdoNMbUmFJKJy01pP7jqP45ye0sXL0Gff3YPZGfVry7gK+Bh63esQEaCnPrScrdpB8ycKW+KS+ddv6KWUNdQKSHsEWtikQ505WYHtqZ81XIMP6HXLV3H/lMRfT43NOALUBpauuJ+JXM5f1yl8rSJHY0YoA2CUScmUrgJLQ5KsBdRPq5GXS7TKTuRZ7O7J/yWoAys2ok8BOAiq5sths+oZ7LMAgHkTLeik67arWTVvy+wiDcXpMpcak3W8pm8cdNDbVu96WM=
-  matrix:
-  - TARGET="webpack@3 html-webpack-plugin@2"
-  - TARGET="webpack@4 html-webpack-plugin@3"
 
 jobs:
   include:
@@ -25,7 +22,6 @@ jobs:
     stage: check
     os: linux
     node_js: node
-    env: []
     script: travis_retry npm run coverage
     after_success:
     - travis_retry npm install coveralls
@@ -34,7 +30,6 @@ jobs:
   - stage: deploy
     os: linux
     node_js: node
-    env: []
     script: skip
     deploy:
       provider: npm
@@ -49,7 +44,6 @@ jobs:
     if: type = pull_request
     os: linux
     node_js: node
-    env: []
     script:
     - |
       if [[ -n $(git diff --name-only package-lock.json) ]]
@@ -68,7 +62,6 @@ before_install:
 
 install:
 - travis_retry npm install
-- travis_retry npm install ${TARGET}
 
 before_script:
 - git config --global user.name "Travis Bot"

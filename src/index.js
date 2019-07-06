@@ -2,7 +2,6 @@ const assert = require('assert');
 const path = require('path');
 const child = require('./compiler');
 const Oracle = require('./oracle');
-const { tap, tapHtml } = require('./compat');
 
 module.exports = class WebappWebpackPlugin {
   constructor(args) {
@@ -64,25 +63,25 @@ module.exports = class WebappWebpackPlugin {
         || htmlPlugin.options.favicons !== false && htmlPlugin.options.inject && inject;
     }
 
-    tap(compiler, 'make', 'WebappWebpackPlugin', async (compilation, callback) => {
+    compiler.hooks.make.tapPromise('WebappWebpackPlugin', async compilation => {
       try {
         // Generate favicons
         const tags = await child.run(this.options, compiler.context, compilation);
         this.tags.resolve(tags);
 
         // Hook into the html-webpack-plugin processing and add the html
-        tapHtml(compilation, 'WebappWebpackPlugin', (htmlPluginData, callback) => {
-          if (this.options.inject(htmlPluginData.plugin)) {
-            const idx = (htmlPluginData.html + '</head>').search(/<\/head>/i);
-            htmlPluginData.html = [htmlPluginData.html.slice(0, idx), ...tags, htmlPluginData.html.slice(idx)].join('');
-          }
-          return callback(null, htmlPluginData);
-        });
-        return callback();
-
+        if (compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing) {
+          await compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapPromise('WebappWebpackPlugin', async htmlPluginData => {
+            if (this.options.inject(htmlPluginData.plugin)) {
+              const idx = (htmlPluginData.html + '</head>').search(/<\/head>/i);
+              htmlPluginData.html = [htmlPluginData.html.slice(0, idx), ...tags, htmlPluginData.html.slice(idx)].join('');
+            }
+            return htmlPluginData;
+          });
+        }
       } catch (err) {
         this.tags.reject(err);
-        return callback(err);
+        throw err;
       }
     });
   }
