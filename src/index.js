@@ -71,9 +71,12 @@ module.exports = class WebappWebpackPlugin {
         this.tags.resolve(tags);
 
         // Hook into the html-webpack-plugin processing and add the html
-        try {
-          const HtmlWebpackPlugin = require('html-webpack-plugin');
-          await HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapPromise('WebappWebpackPlugin', async htmlPluginData => {
+        const htmlWebpackPlugin = compiler.options.plugins
+          .map(({ constructor }) => constructor)
+          .find(({ name }) => name === 'HtmlWebpackPlugin');
+
+        if (htmlWebpackPlugin) {
+          await htmlWebpackPlugin.getHooks(compilation).alterAssetTags.tapPromise('WebappWebpackPlugin', async htmlPluginData => {
             if (this.options.inject(htmlPluginData.plugin)) {
               htmlPluginData.plugin.options.inject = true;
               [].push.apply(
@@ -87,8 +90,6 @@ module.exports = class WebappWebpackPlugin {
             }
             return htmlPluginData;
           });
-        } catch (_) {
-          // html-webpack-plugin is not available, skip html tag injection.
         }
       } catch (err) {
         this.tags.reject(err);
